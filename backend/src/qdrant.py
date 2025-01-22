@@ -51,4 +51,4 @@ def upload_website_to_collection(url: str):
     print(f"Successfully uploaded {len(docs)} documents to collection {collection_name}")
 
 
-upload_website_to_collection("https://hamel.dev/blog/posts/evals/")
+#upload_website_to_collection("https://hamel.dev/blog/posts/evals/")
