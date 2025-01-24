@@ -48,7 +48,7 @@ def upload_website_to_collection(url: str):
         doc.metadata = {"source_url": url}
 
     vector_store.add_documents(docs)
-    print(f"Successfully uploaded {len(docs)} documents to collection {collection_name}")
+    return f"Successfully uploaded {len(docs)} documents to collection {collection_name} from {url}"
 
 
 #upload_website_to_collection("https://hamel.dev/blog/posts/evals/")
