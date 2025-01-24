@@ -1,70 +1,160 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# FullStack_RAG_Application
 
-## Available Scripts
+This project is a FullStack Application designed to provide users with an AI-powered Q&A system and web content indexing functionality. The frontend is developed using React, while the backend is built with Python and integrates advanced AI capabilities.
 
-In the project directory, you can run:
+#### Key Features
 
-### `npm start`
+Question and Answer Functionality: Users can input questions and receive AI-generated, contextually relevant answers.
+Web Content Indexing: Users can provide website URLs, and the application scrapes and indexes the content for future queries.
+Expandable Document Display: Indexed content is displayed with expandable sections, allowing users to explore detailed information and its source.
+AI-Powered Backend: The backend utilizes Python, LangChain, and Qdrant to enable content indexing and efficient document retrieval.
+User-Friendly Interface: The React frontend ensures a seamless and intuitive user experience for asking questions and exploring results.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Target Audience
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+Researchers and Professionals: For quick retrieval and summarization of web content.
+Content Creators and Bloggers: To organize and analyze content from specific websites.
+Developers and Data Enthusiasts: To explore AI-powered Q&A systems for integration or research purposes.
+This application serves anyone who wants a smarter way to index and retrieve meaningful insights from web content.
+# API Reference
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Base URL
 
-### `npm run build`
+```http
+http://localhost:8000
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+### Endpoints
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Chat with RAG
+```http
+  POST /chat
+```
+#### Request Body
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `message` | `string` | **Required**. The question to ask |
 
-### `npm run eject`
+Description: Chat with the RAG API by sending a question.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Response:
+200 OK
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Returns the answer to the question and related documents (if available).
+```json
+{
+  "question": "Your question here",
+  "answer": "Generated answer",
+  "document": [
+    {
+      "page_content": "Relevant content",
+      "source": "Document source URL"
+    }
+  ]
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+500 Internal Server Error
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Returns an error message if something goes wrong.
 
-## Learn More
+#### Index a Website
+```http
+  POST /indexing
+```
+Description: Index content from a website into the collection.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Request Body
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `url`      | `string` | **Required**. URL of the website to index |
 
-### Code Splitting
+#### Response:
+ 200 OK
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Returns a confirmation of successful indexing.
+```json
+{
+  "response": "Successfully uploaded X documents to collection Web from [URL]"
+}
+```
+500 Internal Server Error
 
-### Analyzing the Bundle Size
+Returns an error message if indexing fails.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+## Installation(Frontend)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Follow these steps to install Frontend and set up the project
 
-### Advanced Configuration
+#### Clone the repository
+```bash
+git clone https://github.com/NavodyaDhanushka/FullStack_RAG_Application.git
+```
+#### Navigate to the project directory
+```bash
+cd FullStack_RAG_Application/frontend
+```
+#### Install the required dependencies using npm
+```bash
+npm install
+```
+#### Start the development server
+```bash
+npm start
+```
+#### Access the application in your browser at
+```bash
+git clone https://github.com/NavodyaDhanushka/FullStack_RAG_Application.git
+```
+#### Clone the repository
+```arduion
+http://localhost:3000
+```
+## Installation(Backend with Poetry)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Follow these steps to install Backend using Poetry and set up the project
 
-### Deployment
+#### Clone the repository
+```bash
+git clone https://github.com/NavodyaDhanushka/FullStack_RAG_Application.git
+```
+#### Navigate to the project directory
+```bash
+cd FullStack_RAG_Application/backend
+```
+#### Install Poetry (if not already installed)
+poetry is required to manage dependencies
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+#### Install dependencies using Poetry
+Poetry will automatically create and use its own virtual environment.
+```bash
+poetry install
+```
+#### Activate the Poetry environment
+```bash
+poetry shell
+```
+#### Set up environment variables
+Create a .env file in the backend directory with the following contents
+```arduion
+OPENAI_API_KEY=your_openai_api_key
+QDRANT_API_KEY=your_qdrant_api_key
+QDRANT_URL=your_qdrant_url
+```
+#### Run the backend server
+```arduion
+poetry run uvicorn main:app --reload
+```
+#### Access the API documentation
+```arduion
+http://localhost:8000/docs
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    
