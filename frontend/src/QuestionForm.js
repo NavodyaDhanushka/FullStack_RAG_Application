@@ -48,14 +48,33 @@ function QuestionForm() {
     }
   };
 
-  const handleIndexing = async (e) => {
-    e.preventDefault();
-    setAnswer("");
-    setIsLoading(true);
-    const response = await api.post("/indexing", { message: questions });
+const handleIndexing = async (e) => {
+  e.preventDefault();
+  setAnswer("");
+  setError("");
+  setIsLoading(true);
+
+  if (!questions.trim()) {
+    setError("URL cannot be empty.");
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const response = await api.post("/indexing", null, {
+      params: { url: questions.trim() }, // Send the URL as a query parameter
+    });
     setAnswer(response.data.response);
+  } catch (error) {
+    console.error("Error:", error.response?.data || error.message);
+    setError(
+      error.response?.data?.error ||
+      "Failed to index the website. Please try again."
+    );
+  } finally {
     setIsLoading(false);
   }
+};
 
   return (
     <div className="main-container">
